@@ -35,8 +35,13 @@ void Camera::loadToShader()
 void Camera::UpdateView()
 {
 	view = glm::mat4();
-	glm::mat4 rotation = glm::rotate(glm::mat4(), (xRot / 180) * (float)M_PI, glm::vec3(1.0f, 0.0f, 0.0f));
-	rotation = glm::rotate(rotation, (yRot / 180) * (float)M_PI, glm::vec3(0.0f, 1.0f, 0.0f));
+#ifdef __linux__
+	glm::mat4 rotation = glm::rotate(glm::mat4(), (xRot / 180) * M_PI, glm::vec3(1.0f, 0.0f, 0.0f));
+	rotation = glm::rotate(rotation, (yRot / 180) * M_PI, glm::vec3(0.0f, 1.0f, 0.0f));
+#else
+	glm::mat4 rotation = glm::rotate(glm::mat4(), (xRot), glm::vec3(1.0f, 0.0f, 0.0f));
+	rotation = glm::rotate(rotation, (yRot), glm::vec3(0.0f, 1.0f, 0.0f));
+#endif
 
 	glm::mat4 translate = glm::translate(glm::mat4(), glm::vec3(xPos, yPos, zPos));
 
@@ -48,8 +53,13 @@ void Camera::UpdateProjection()
 	int viewPortWidth = 0, viewPortHeight = 0;
 	glfwGetFramebufferSize(window, &viewPortWidth, &viewPortHeight);
 	float aspect = (float)viewPortWidth / (float)viewPortHeight;
-	projection = glm::perspectiveFov((65.0f / 180) * (float)M_PI, aspect, 1.0f, 0.01f, 10000.0f);
-	glViewport(0,0,viewPortWidth, viewPortHeight);
+#ifdef __linux__
+	projection = glm::perspectiveFov((65.0f / 180) * M_PI, aspect, 1.0f, 0.01f, 10000.0f);
+#else
+	projection = glm::perspectiveFov((65.0f), aspect, 1.0f, 0.01f, 10000.0f);
+#endif
+
+	glViewport(0, 0, viewPortWidth, viewPortHeight);
 }
 
 void Camera::Update(bool keys[], GamepadManager *gamePads)
