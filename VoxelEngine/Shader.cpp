@@ -12,7 +12,7 @@ Shader::Shader(GLchar *VertexShader, GLchar *FragmentShader)
 
 	if (shaderProgram == 0)
 	{
-		fprintf(stderr, "Could not create ShaderProgram\n");
+		fprintf(stderr, "Could not create ShaderProgram/n");
 		return;
 	}
 
@@ -30,14 +30,14 @@ Shader::Shader(GLchar *VertexShader, GLchar *FragmentShader)
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &linkStatus);
 	if (linkStatus != GL_TRUE)
 	{
-		fprintf(stderr, "Program link failed!\n");
+		fprintf(stderr, "Program link failed!/n");
 
 		GLint infoLength;
 		glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &infoLength);
 
 		GLchar *info = new GLchar[infoLength + 1];
 		glGetProgramInfoLog(shaderProgram, infoLength + 1, NULL, info);
-		fprintf(stderr, "%s\n", info);
+		fprintf(stderr, "%s/n", info);
 		delete info;
 	}
 

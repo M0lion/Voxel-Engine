@@ -1,6 +1,6 @@
 #include "Chunk.h"
-#include <glm\gtc\type_ptr.hpp>
-#include <glm\gtc\matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Shader.h"
 #include "Functions.h"
 
@@ -8,6 +8,9 @@ const float Chunk::BLOCK_SIZE = 0.1f;
 
 Chunk::Chunk(int x, int y, int z, Block *** blocks_ptr)
 {
+	mesh = 0;
+
+
 	this->x = x;
 	this->y = y;
 	this->z = z;
@@ -26,6 +29,8 @@ Chunk::Chunk(int x, int y, int z, Block *** blocks_ptr)
 				blocks[i][j] = new Block[CHUNK_SIZE];
 				for (int k = 0; k < CHUNK_SIZE; k++)
 				{
+					//	blocks[i][j][k] = *new Block();
+
 					if (j >(func(i + (x * CHUNK_SIZE) - 50, k + (z * CHUNK_SIZE) - 50) * 5) + 5)
 						blocks[i][j][k].setActive(false);
 					else

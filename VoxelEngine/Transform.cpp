@@ -1,9 +1,9 @@
 #include "Transform.h"
 
-#include <glm\glm.hpp>
-#include <glm\gtx\transform.hpp>
-#include <glm\gtc\type_ptr.hpp>
-#include <glm\gtc\matrix_transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <math.h>
 #include "Shader.h"
 

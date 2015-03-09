@@ -2,10 +2,12 @@
 
 #define _USE_MATH_DEFINES
 
-#include <glm\gtc\type_ptr.hpp>
-#include <glm\gtc\matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <math.h>
 #include "Shader.h"
+
+#include <iostream>
 
 Camera::Camera(GLFWwindow *window)
 {
@@ -16,7 +18,7 @@ Camera::Camera(GLFWwindow *window)
 	zPos = 3;
 
 	xRot = 0;
-	yRot = 180;
+	yRot = 0;
 	zRot = 0;
 
 	UpdateView();
@@ -26,15 +28,15 @@ Camera::Camera(GLFWwindow *window)
 void Camera::loadToShader()
 {
 	GLint viewHandle = Shader::getCurrentShader()->getUniformLocation("view");
-	glUniformMatrix4fv(viewHandle, 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(Shader::getCurrentShader()->getUniformLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(viewHandle, 1.0f, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(Shader::getCurrentShader()->getUniformLocation("projection"), 1.0f, GL_FALSE, glm::value_ptr(projection));
 }
 
 void Camera::UpdateView()
 {
 	view = glm::mat4();
-	glm::mat4 rotation = glm::rotate(glm::mat4(), xRot, glm::vec3(1, 0, 0));
-	rotation = glm::rotate(rotation, yRot, glm::vec3(0, 1, 0));
+	glm::mat4 rotation = glm::rotate(glm::mat4(), (xRot / 180) * (float)M_PI, glm::vec3(1.0f, 0.0f, 0.0f));
+	rotation = glm::rotate(rotation, (yRot / 180) * (float)M_PI, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glm::mat4 translate = glm::translate(glm::mat4(), glm::vec3(xPos, yPos, zPos));
 
@@ -45,8 +47,8 @@ void Camera::UpdateProjection()
 {
 	int viewPortWidth = 0, viewPortHeight = 0;
 	glfwGetFramebufferSize(window, &viewPortWidth, &viewPortHeight);
-	float aspect = (float)viewPortWidth / viewPortHeight;
-	projection = glm::perspectiveFov(65.0f, aspect, 1.0f, 0.01f, 10000.0f);
+	float aspect = (float)viewPortWidth / (float)viewPortHeight;
+	projection = glm::perspectiveFov((65.0f / 180) * (float)M_PI, aspect, 1.0f, 0.01f, 10000.0f);
 	glViewport(0,0,viewPortWidth, viewPortHeight);
 }
 
@@ -55,8 +57,8 @@ void Camera::Update(bool keys[], GamepadManager *gamePads)
 
 	float xMove = 0, yMove = 0, zMove = 0;
 
-	float moveSpeed = 0.05;
-	float turnSpeed = 1.5;
+	float moveSpeed = 0.05f;
+	float turnSpeed = 1.5f;
 
 	zMove -= moveSpeed * gamePads->getAxis(1);
 	xMove -= moveSpeed * gamePads->getAxis(0);
@@ -113,8 +115,8 @@ void Camera::Update(bool keys[], GamepadManager *gamePads)
 void Camera::Move(float forward, float side, float up)
 {
 
-	float x = (xRot / 180) * (M_PI);
-	float y = (yRot / 180) * (M_PI);
+	float x = (xRot / 180.0f) * (M_PI);
+	float y = (yRot / 180.0f) * (M_PI);
 
 	//side
 	xPos += (side * cos(y));// -(forward * sin(y));

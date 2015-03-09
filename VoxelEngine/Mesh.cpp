@@ -1,12 +1,15 @@
 #include "Mesh.h"
 #include "Shader.h"
 
+#include <iostream>
 
 Mesh::Mesh()
 {
 	vertices = 0;
 	indices = 0;
 	triangleCount = 0;
+	vertexCount = 0;
+	indexCount = 0;
 
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -54,7 +57,7 @@ void Mesh::Build()
 		vertexData[(i * vertexSize) + 5] = it->normal.z;
 		vertexData[(i * vertexSize) + 6] = it->color.r;
 		vertexData[(i * vertexSize) + 7] = it->color.g;
-		vertexData[(i * vertexSize) + 8] = it->color.b;
+		vertexData[(i * vertexSize) + 8 ]= it->color.b;
 		vertexData[(i * vertexSize) + 9] = it->color.a;
 		i++;
 	}
@@ -88,8 +91,8 @@ void Mesh::Build()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	delete(vertexData);
-	delete(indexData);
+	delete[] vertexData;
+	delete[] indexData;
 	vertices = 0;
 	indices = 0;
 }
@@ -160,7 +163,7 @@ void Mesh::addTriangle(GLuint v1, GLuint v2, GLuint v3)
 	triangleCount++;
 }
 
-void Mesh::Draw()
+void Mesh::Draw()	
 {
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);

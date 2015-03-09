@@ -1,4 +1,4 @@
-#version 440 core
+#version 130
 
 in vec4 pos;
 in vec4 col;

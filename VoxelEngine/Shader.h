@@ -1,6 +1,6 @@
 #pragma once
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #define SHADER_POS_HANDLE 0
 #define SHADER_NORMAL_HANDLE 1

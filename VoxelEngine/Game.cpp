@@ -21,10 +21,10 @@ Game::Game()
 		throw "Could not create window";
 	}
 
-	glfwSetKeyCallback(window, keyCallback);
-
 	glfwMakeContextCurrent(window);
-	printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+	printf("OpenGL version: %s/n", glGetString(GL_VERSION));
+
+	glfwSetKeyCallback(window, keyCallback);
 
 	//glewExperimental = GL_TRUE;
 	glewInit();
@@ -67,7 +67,7 @@ Game::Game()
 
 		c++;
 	}
-	printf("Blocks: %d\n", blocks);
+	printf("Blocks: %d/n", blocks);
 
 	run();
 }
@@ -83,12 +83,11 @@ void Game::run()
 {
 	while (!glfwWindowShouldClose(window))
 	{
-		Update();
-		Draw();
+		Update();		Draw();
 
 		GLenum error;
 		while ((error = glGetError()) != GL_NO_ERROR)
-			fprintf(stderr, "OpenGL error: %s\n", gluErrorString(error));
+			fprintf(stderr, "OpenGL error: %s/n", gluErrorString(error));
 
 		glfwPollEvents();
 	}
@@ -119,7 +118,7 @@ void Game::Update()
 
 
 		c++;
-		printf("Blocks: %d\n", blocks);
+		printf("Blocks: %d/n", blocks);
 	}
 }
 

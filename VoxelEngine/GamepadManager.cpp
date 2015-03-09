@@ -1,6 +1,7 @@
 #include "GamepadManager.h"
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 #include <math.h>
+#include <cstdlib>
 
 GamepadManager::GamepadManager()
 {

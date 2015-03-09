@@ -3,7 +3,8 @@
 
 Block::Block()
 {
-	Block::Block(BlockType::Default, true);
+	blockType = BlockType::Default;
+	active = true;
 }
 
 Block::Block(BlockType blockType, bool active)
